@@ -4,15 +4,18 @@ from .utils import logger, request_drcom, ping
 
 
 class Bocchi:
-    def __init__(self, username: str,
+    def __init__(self,
+                 username: str,
                  password: str,
+                 drcom_url: str = 'https://drcom.szu.edu.cn/',
+                 ping_url: str = 'www.baidu.com',
                  log_path: str = 'bocchi_link.log',
                  log_terminal: bool = True):
         self.username = username
         self.password = password
         self.logger = logger(log_path, log_terminal=log_terminal)
-        self.drcom_url = 'https://drcom.szu.edu.cn/'
-        self.ping_url = 'https://www.baidu.com/'
+        self.drcom_url = drcom_url
+        self.ping_url = ping_url
         self.loop_time = 60
         self.logger.info('BocchiLink initialized')
         self.logger.info(self.__dict__)

@@ -2,6 +2,7 @@ import logging
 import urllib.request
 import urllib.parse
 import re
+import os
 
 
 def logger(log_path, log_terminal=True) -> logging.Logger:
@@ -14,7 +15,7 @@ def logger(log_path, log_terminal=True) -> logging.Logger:
         console_handler.setFormatter(formatter)
         _logger.addHandler(console_handler)
 
-    if log_path:
+    if os.path.isfile(log_path):
         file_handler = logging.FileHandler(log_path)
         file_handler.setFormatter(formatter)
         _logger.addHandler(file_handler)

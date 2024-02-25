@@ -7,6 +7,7 @@ class Bocchi:
     def __init__(self,
                  username: str,
                  password: str,
+                 trying_times: int,
                  drcom_url: str = 'https://drcom.szu.edu.cn/',
                  ping_url: str = 'www.baidu.com',
                  log_path: str = 'bocchi_link.log',
@@ -16,9 +17,21 @@ class Bocchi:
         self.logger = logger(log_path, log_terminal=log_terminal)
         self.drcom_url = drcom_url
         self.ping_url = ping_url
+        self.trying_times = trying_times
         self.loop_time = 60
         self.logger.info('BocchiLink initialized')
         self.logger.info(self.__dict__)
+
+    def trying(self):
+        for t in range(self.trying_times):
+            self.logger.info(f'{t}th checking connection...')
+            if not ping(self.ping_url):
+                self.logger.warning('Connection lost')
+                self.logger.setLevel(logging.INFO)
+                self.log_in()
+            else:
+                self.logger.info('Already connected. Shut down')
+                break
 
     def loop(self):
         while True:
